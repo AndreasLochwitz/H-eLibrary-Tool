@@ -1,7 +1,7 @@
 # H-eLibrary-Tool
-Download pdfs from Hanser eLibrary
+Download pdfs from [Hanser eLibrary](http://www.hanser-elibrary.com/)
 
-Requires [PhantomJS](http://phantomjs.org/), installed curl and access to Hander eLibrary
+Requires [PhantomJS](http://phantomjs.org/), installed curl and access to [Hanser eLibrary](http://www.hanser-elibrary.com/)
 
 ## Usage
 
