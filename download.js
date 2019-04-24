@@ -1,4 +1,4 @@
-
+﻿
 // Module laden
 var process = require("child_process"),
 	system = require('system'),
@@ -46,7 +46,7 @@ page.open(url, function(status) {
 		var matches = page.content.match(/\/doi\/pdf\/(.*?)(\d|\/|\.|fm)*">PDF/g);
 		for (var i = 0; i < matches.length; i++) {
 			// Url zusammenbauen, Prefix hinzufuegen, Ende (>PDF) entfernen
-			matches[i] = prefix + matches[i].substring(0, matches[i].length - 5);
+			matches[i] = prefix + matches[i].substring(0, matches[i].length - 5) + "?download=true";
 			downloadFile(matches[i]);
 		}
 	}
