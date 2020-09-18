@@ -9,7 +9,7 @@ var process = require("child_process"),
 var execFile = process.execFile;
 
 // Variablen
-var prefix = "http://www.hanser-elibrary.com",
+var prefix = "https://www.hanser-elibrary.com",
 	downloadCounter = 0,
 	fileCounter = 0;
 
@@ -43,10 +43,10 @@ page.open(url, function(status) {
 	console.log("Status = " + status);
 	if (status === "success") {
 		// nach den Download-Links für die PDF-Dateien suchen
-		var matches = page.content.match(/\/doi\/pdf\/(.*?)(\d|\/|\.|fm)*">PDF/g);
+		var matches = page.content.match(/pdf\/(.*?)"></g);
 		for (var i = 0; i < matches.length; i++) {
 			// Url zusammenbauen, Prefix hinzufuegen, Ende (>PDF) entfernen
-			matches[i] = prefix + matches[i].substring(0, matches[i].length - 5);
+			matches[i] = prefix + "/doi/" + matches[i].substring(0, matches[i].length - 3);
 			downloadFile(matches[i]);
 		}
 	}
@@ -61,7 +61,7 @@ function downloadFile(fileUrl) {
 	var fileName = getNextNumber() + "_" +  getFileName(fileUrl) + ".pdf";
 	downloadCounter++;
 	console.log("downloading " + fileUrl + "\n");
-	execFile("curl", ["-L", "-o", targetDir + fs.separator +  fileName, fileUrl, "-c", "cookies.txt"], null, function (err, stdout, stderr) {
+	execFile("curl", ["-L", "-o", targetDir + fs.separator +  fileName, fileUrl + "?download=true", "-c", "cookies.txt"], null, function (err, stdout, stderr) {
 		//console.log("STDOUT: " + JSON.stringify(stdout));
 		//console.log("STDERR: " + JSON.stringify(stderr));
 		downloadCounter--;
@@ -81,4 +81,4 @@ var interval = setInterval(function () {
 	} else {
 		console.log("\nWarte auf Download Ende - " + downloadCounter + " laufende Downloads");
 	}
-}, 7500);
+}, 20000);
